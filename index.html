@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belajar Bahasa Arab - KeluargaKu</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f7f0;
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #2e8b57, #3cb371);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .header h1 {
+    font-size: 2em;
+    margin-bottom: 5px;
+  }
+
+  .header .arabic-title {
+    font-size: 2.2em;
+    direction: rtl;
+    font-family: 'Traditional Arabic', 'Arial', sans-serif;
+  }
+
+  .header p {
+    font-size: 1.1em;
+    margin-top: 8px;
+    opacity: 0.95;
+  }
+
+  .explanation {
+    max-width: 750px;
+    margin: 25px auto;
+    background: white;
+    border-radius: 16px;
+    padding: 25px 30px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid #2e8b57;
+  }
+
+  .explanation h2 {
+    color: #2e8b57;
+    font-size: 1.3em;
+    margin-bottom: 12px;
+  }
+
+  .explanation p {
+    font-size: 1.05em;
+    line-height: 1.8;
+    color: #444;
+  }
+
+  .explanation .example-box {
+    background: #e8f5e9;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .explanation .example-box .word {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #2e8b57;
+  }
+
+  .explanation .example-box .arrow {
+    font-size: 1.5em;
+    color: #888;
+  }
+
+  .explanation .example-box .arabic-word {
+    font-size: 1.6em;
+    direction: rtl;
+    font-family: 'Traditional Arabic', 'Arial', sans-serif;
+    color: #1a6b3c;
+  }
+
+  .cards-section {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+
+  .cards-section h2 {
+    text-align: center;
+    color: #2e8b57;
+    font-size: 1.4em;
+    margin-bottom: 20px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+
+  .card.flipped .card-front {
+    display: none;
+  }
+
+  .card.flipped .card-back {
+    display: flex;
+  }
+
+  .card-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 20px;
+    text-align: center;
+  }
+
+  .card-back {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 20px;
+    text-align: center;
+    background: #e8f5e9;
+  }
+
+  .card-label {
+    font-size: 0.85em;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .card-indo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .card-arabic {
+    font-size: 2.2em;
+    direction: rtl;
+    font-family: 'Traditional Arabic', 'Arial', sans-serif;
+    color: #1a6b3c;
+    margin-bottom: 5px;
+  }
+
+  .card-latin {
+    font-size: 1.1em;
+    color: #666;
+    font-style: italic;
+  }
+
+  .card-divider {
+    width: 60%;
+    height: 2px;
+    background: #c8e6c9;
+    margin: 10px 0;
+  }
+
+  .card-back .card-label {
+    color: #2e8b57;
+  }
+
+  .card-back .card-indo {
+    color: #1a6b3c;
+  }
+
+  .tap-hint {
+    font-size: 0.8em;
+    color: #aaa;
+    margin-top: 12px;
+  }
+
+  .nav-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
+
+  .nav-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #2e8b57;
+    background: white;
+    color: #2e8b57;
+    font-size: 0.85em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-dot:hover, .nav-dot.active {
+    background: #2e8b57;
+    color: white;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+    font-size: 0.9em;
+  }
+
+  .quiz-section {
+    max-width: 750px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+
+  .quiz-box {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+
+  .quiz-box h2 {
+    color: #2e8b57;
+    margin-bottom: 15px;
+  }
+
+  .quiz-question {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #444;
+  }
+
+  .quiz-question .q-arabic {
+    font-size: 2em;
+    direction: rtl;
+    font-family: 'Traditional Arabic', 'Arial', sans-serif;
+    color: #1a6b3c;
+    display: block;
+    margin: 10px 0;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .quiz-option {
+    padding: 12px 24px;
+    border: 2px solid #c8e6c9;
+    border-radius: 12px;
+    background: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .quiz-option:hover {
+    border-color: #2e8b57;
+    background: #e8f5e9;
+  }
+
+  .quiz-option.correct {
+    border-color: #2e8b57;
+    background: #2e8b57;
+    color: white;
+  }
+
+  .quiz-option.wrong {
+    border-color: #e57373;
+    background: #ffebee;
+    color: #c62828;
+  }
+
+  .quiz-result {
+    margin-top: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    min-height: 30px;
+  }
+
+  .btn-next {
+    margin-top: 15px;
+    padding: 10px 30px;
+    background: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    display: none;
+  }
+
+  .btn-next:hover {
+    background: #1a6b3c;
+  }
+
+  .score-display {
+    font-size: 1em;
+    color: #2e8b57;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 500px) {
+    .header h1 { font-size: 1.5em; }
+    .header .arabic-title { font-size: 1.7em; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .card-arabic { font-size: 1.8em; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="arabic-title">أُسْرَتِي</div>
+  <h1>Keluargaku</h1>
+  <p>Belajar Bahasa Arab untuk Kelas 1 SD</p>
+</div>
+
+<div class="explanation">
+  <h2>Penjelasan Singkat</h2>
+  <p>
+    Dalam Bahasa Arab, jika kita ingin mengatakan <strong>"...ku"</strong> (milikku),
+    kita cukup menambahkan huruf <strong>يْ (ya')</strong> di akhir kata.
+    <br><br>
+    Contohnya: kata <strong>Ayah</strong> dalam Bahasa Arab adalah <strong>أَبٌ (Abun)</strong>.
+    Jika kita tambahkan "ku" menjadi <strong>Ayahku</strong>, maka dalam Bahasa Arab ditulis
+    <strong>أَبِي (Abi)</strong>.
+  </p>
+  <div class="example-box">
+    <span class="word">Ayah</span>
+    <span class="arabic-word">أَبٌ</span>
+    <span class="arrow">→</span>
+    <span class="word">Ayahku</span>
+    <span class="arabic-word">أَبِي</span>
+  </div>
+  <p style="margin-top:12px; font-size:0.95em; color:#666;">
+    <strong>Klik setiap kartu</strong> untuk melihat bentuk "ku"-nya!
+  </p>
+</div>
+
+<div class="cards-section">
+  <h2>Kartu Kosakata Keluarga</h2>
+  <div class="cards-grid" id="cardsGrid"></div>
+  <div class="nav-dots" id="navDots"></div>
+</div>
+
+<div class="quiz-section">
+  <div class="quiz-box">
+    <h2>Ayo Coba!</h2>
+    <div class="score-display" id="scoreDisplay">Skor: 0 / 0</div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-result" id="quizResult"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQuiz()">Soal Berikutnya</button>
+  </div>
+</div>
+
+<div class="footer">
+  Belajar Bahasa Arab itu menyenangkan!
+</div>
+
+<script>
+const vocabulary = [
+  {
+    indo: "Ayah",
+    arabic: "أَبٌ",
+    latin: "Abun",
+    indoKu: "Ayahku",
+    arabicKu: "أَبِي",
+    latinKu: "Abi"
+  },
+  {
+    indo: "Ibu",
+    arabic: "أُمٌّ",
+    latin: "Ummun",
+    indoKu: "Ibuku",
+    arabicKu: "أُمِّي",
+    latinKu: "Ummi"
+  },
+  {
+    indo: "Kakek",
+    arabic: "جَدٌّ",
+    latin: "Jaddun",
+    indoKu: "Kakekku",
+    arabicKu: "جَدِّي",
+    latinKu: "Jaddi"
+  },
+  {
+    indo: "Nenek",
+    arabic: "جَدَّةٌ",
+    latin: "Jaddatun",
+    indoKu: "Nenekku",
+    arabicKu: "جَدَّتِي",
+    latinKu: "Jaddati"
+  },
+  {
+    indo: "Paman",
+    arabic: "عَمٌّ",
+    latin: "'Ammun",
+    indoKu: "Pamanku",
+    arabicKu: "عَمِّي",
+    latinKu: "'Ammi"
+  },
+  {
+    indo: "Bibi",
+    arabic: "عَمَّةٌ",
+    latin: "'Ammatun",
+    indoKu: "Bibiku",
+    arabicKu: "عَمَّتِي",
+    latinKu: "'Ammati"
+  },
+  {
+    indo: "Saudara Laki-laki",
+    arabic: "أَخٌ",
+    latin: "Akhun",
+    indoKu: "Saudaraku (lk)",
+    arabicKu: "أَخِي",
+    latinKu: "Akhi"
+  },
+  {
+    indo: "Saudara Perempuan",
+    arabic: "أُخْتٌ",
+    latin: "Ukhtun",
+    indoKu: "Saudaraku (pr)",
+    arabicKu: "أُخْتِي",
+    latinKu: "Ukhti"
+  },
+  {
+    indo: "Nama",
+    arabic: "اِسْمٌ",
+    latin: "Ismun",
+    indoKu: "Namaku",
+    arabicKu: "اِسْمِي",
+    latinKu: "Ismi"
+  },
+  {
+    indo: "Keluarga",
+    arabic: "أُسْرَةٌ",
+    latin: "Usratun",
+    indoKu: "Keluargaku",
+    arabicKu: "أُسْرَتِي",
+    latinKu: "Usrati"
+  }
+];
+
+// Build cards
+const grid = document.getElementById('cardsGrid');
+const dots = document.getElementById('navDots');
+
+vocabulary.forEach((v, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.id = 'card-' + i;
+  card.innerHTML = `
+    <div class="card-front">
+      <div class="card-label">Kata Utama</div>
+      <div class="card-indo">${v.indo}</div>
+      <div class="card-arabic">${v.arabic}</div>
+      <div class="card-latin">${v.latin}</div>
+      <div class="tap-hint">Klik untuk lihat bentuk "ku"</div>
+    </div>
+    <div class="card-back">
+      <div class="card-label">Ditambah "ku" (يْ)</div>
+      <div class="card-indo">${v.indoKu}</div>
+      <div class="card-arabic">${v.arabicKu}</div>
+      <div class="card-latin">${v.latinKu}</div>
+      <div class="tap-hint">Klik untuk kembali</div>
+    </div>
+  `;
+  card.addEventListener('click', () => {
+    card.classList.toggle('flipped');
+  });
+  grid.appendChild(card);
+
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot';
+  dot.textContent = i + 1;
+  dot.addEventListener('click', () => {
+    document.getElementById('card-' + i).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+  });
+  dots.appendChild(dot);
+});
+
+// Quiz
+let quizScore = 0;
+let quizTotal = 0;
+let currentQuiz = null;
+let answered = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function generateQuiz() {
+  answered = false;
+  document.getElementById('quizResult').textContent = '';
+  document.getElementById('btnNext').style.display = 'none';
+
+  const idx = Math.floor(Math.random() * vocabulary.length);
+  const v = vocabulary[idx];
+  const mode = Math.random() > 0.5 ? 'toKu' : 'toMain';
+
+  if (mode === 'toKu') {
+    currentQuiz = {
+      question: `Apa Bahasa Arabnya "<strong>${v.indoKu}</strong>"?`,
+      arabic: v.arabicKu,
+      correct: v.latinKu,
+      options: shuffle(vocabulary.map(x => x.latinKu)).slice(0, 4)
+    };
+    if (!currentQuiz.options.includes(v.latinKu)) {
+      currentQuiz.options[0] = v.latinKu;
+      currentQuiz.options = shuffle(currentQuiz.options);
+    }
+  } else {
+    currentQuiz = {
+      question: `Apa Bahasa Arabnya "<strong>${v.indo}</strong>"?`,
+      arabic: v.arabic,
+      correct: v.latin,
+      options: shuffle(vocabulary.map(x => x.latin)).slice(0, 4)
+    };
+    if (!currentQuiz.options.includes(v.latin)) {
+      currentQuiz.options[0] = v.latin;
+      currentQuiz.options = shuffle(currentQuiz.options);
+    }
+  }
+
+  document.getElementById('quizQuestion').innerHTML =
+    currentQuiz.question + '<span class="q-arabic">' + currentQuiz.arabic + '</span>';
+
+  const optContainer = document.getElementById('quizOptions');
+  optContainer.innerHTML = '';
+  currentQuiz.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => checkAnswer(btn, opt));
+    optContainer.appendChild(btn);
+  });
+}
+
+function checkAnswer(btn, selected) {
+  if (answered) return;
+  answered = true;
+  quizTotal++;
+
+  const allBtns = document.querySelectorAll('.quiz-option');
+  if (selected === currentQuiz.correct) {
+    btn.classList.add('correct');
+    quizScore++;
+    document.getElementById('quizResult').textContent = 'Benar! Hebat!';
+    document.getElementById('quizResult').style.color = '#2e8b57';
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => {
+      if (b.textContent === currentQuiz.correct) b.classList.add('correct');
+    });
+    document.getElementById('quizResult').textContent = 'Belum tepat. Jawabannya: ' + currentQuiz.correct;
+    document.getElementById('quizResult').style.color = '#c62828';
+  }
+
+  document.getElementById('scoreDisplay').textContent = `Skor: ${quizScore} / ${quizTotal}`;
+  document.getElementById('btnNext').style.display = 'inline-block';
+}
+
+function nextQuiz() {
+  generateQuiz();
+}
+
+generateQuiz();
+</script>
+
+</body>
+</html>
